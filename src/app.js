@@ -118,7 +118,9 @@ const morganOption = (NODE_ENV === 'production'
 
     users.splice(index, 1)
 
-    res.send('Deleted')
+    res
+      .status(204)
+      .end()
   })
 
   app.get('/', (req, res) => {

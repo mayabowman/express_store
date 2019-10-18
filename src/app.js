@@ -44,35 +44,36 @@ app.post('/user', (req, res) => {
   const { username, password, favoriteClub, newsLetter=false } = req.body
 
   // validation code here
-  if(!username) {
+  if (!username) {
     return res  
       .status(400)
       .send('Username required')
   }
-  if(!password) {
+  if (!password) {
     return res
       .status(400)
       .send('Password required')
   }
-  if(!favoriteClub) {
+  if (!favoriteClub) {
     return res  
       .status(400)
       .send('favorite Club required')
   }
 
-  if(username.length < 6 || username.length > 20) {
+  if (username.length < 6 || username.length > 20) {
     return res
       .status(400)
       .send('Username must be between 6 and 20 characters')
   }
 
-  if(password.length < 8 || password.length > 36) {
+  if (password.length < 8 || password.length > 36) {
     return res
       .status(400)
       .send('Password must be between 8 and 36 characters')
   }
 
-  if(!password.match(/^(?=.*?[0-9])(?=.*[!@#$%])[0-9a-zA-Z!@#$%]{8,}$/)) {
+  console.log("'" + password + "'")
+  if (!password.match(/^(?=.*?[0-9])(?=.*[!@#$%])[0-9a-zA-Z!@#$%]{8,}$/)) {
     return res
       .status(400)
       .send('Password must contain at least one digit')
@@ -86,7 +87,7 @@ app.post('/user', (req, res) => {
     'Utah Olympic Oval Curling Club'
   ]
 
-  if(!clubs.includes(favoriteClub)) {
+  if (!clubs.includes(favoriteClub)) {
     return res
       .status(400)
       .send('Not a valid club')
@@ -110,7 +111,7 @@ app.delete('/user/:userId', (req, res) => {
   const index = users.findIndex(u => u.id == userId)
 
   //make sure we actually find a user with that id
-  if(index === -1) {
+  if (index === -1) {
     return res
       .status(404)
       .send('User not found')
@@ -133,7 +134,7 @@ app.get('/user', (req, res) => {
 
 app.use(function errorHandler(error, req, res, next) {
   let response
-  if(NODE_ENV === 'production') {
+  if (NODE_ENV === 'production') {
     response = { error: { message: 'server error' } }
   } else {
     console.error(error)
